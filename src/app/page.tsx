@@ -1,0 +1,205 @@
+﻿"use client";
+
+import Image from "next/image";
+import Link from "next/link";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowRight, CheckCircle2, Building, Users, Globe, Maximize2, X } from "lucide-react";
+
+export default function Home() {
+  const [latestPosts, setLatestPosts] = useState<any[]>([]);
+  const [gallery, setGallery] = useState<any[]>([]);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetch("/api/blog", { cache: "no-store" })
+      .then(res => res.json())
+      .then(data => Array.isArray(data) && setLatestPosts(data.slice(-3).reverse()));
+      
+    fetch("/api/gallery", { cache: "no-store" })
+      .then(res => res.json())
+      .then(data => Array.isArray(data) && setGallery(data));
+  }, []);
+
+  const defaultImages = [
+    "/assets/images/oba-celik-yapi-galeri-(1).jpeg",
+    "/assets/images/oba-celik-yapi-galeri-(2).jpeg",
+    "/assets/images/oba-celik-yapi-galeri-(3).jpeg",
+    "/assets/images/oba-celik-yapi-galeri-(4).jpeg",
+    "/assets/images/oba-celik-yapi-galeri-(5).jpeg",
+    "/assets/images/oba-celik-yapi-galeri-(6).jpeg",
+    "/assets/images/oba-celik-yapi-galeri-(7).jpeg",
+    "/assets/images/oba-celik-yapi-galeri-(8).jpeg",
+  ];
+
+  const galleryItems = gallery.length > 0 ? gallery.map(g => g.url) : defaultImages;
+
+  return (
+    <div className="flex flex-col min-h-screen bg-white text-oba-dark text-left">
+      {/* Hero Section */}
+      <section className="relative h-screen flex items-center justify-center text-white overflow-hidden">
+        <Image
+          src="/assets/images/oba-celik-yapi-galeri.png"
+          alt="Oba Çelik Yapı Hero"
+          fill
+          className="object-cover brightness-50 scale-105 animate-slow-zoom"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-transparent to-black/70 z-0"></div>
+        <div className="container mx-auto px-6 z-10 text-center relative">
+          <div className="inline-block px-4 py-1 mb-6 border border-white/30 rounded-full bg-white/10 backdrop-blur-sm text-[9px] md:text-xs font-bold uppercase tracking-widest text-oba-orange">
+            Premium Çelik Yapı Sistemleri
+          </div>
+          <h1 className="text-4xl md:text-7xl lg:text-8xl font-black mb-8 leading-tight tracking-tight uppercase italic text-center text-white">
+            Geleceği <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-oba-orange to-orange-300">Çelikle İnşa Et</span>
+          </h1>
+          <p className="text-sm md:text-2xl mb-10 max-w-2xl mx-auto text-gray-200 font-medium leading-relaxed px-4 text-center">
+            Türkiye'nin her noktasında estetik, dayanıklı ve hızlı kurulumlu çelik villa çözümleri.
+          </p>
+          <div className="flex flex-col sm:flex-row justify-center gap-4 md:gap-6">
+            <Link href="/hizmetler" className="bg-oba-orange text-white px-8 md:px-10 py-4 md:py-5 rounded-full font-black text-[10px] md:text-sm uppercase tracking-widest hover:bg-[#D45520] transition-all hover:scale-105 shadow-2xl">
+              Projeleri İncele
+            </Link>
+            <Link href="/iletisim" className="bg-white/10 backdrop-blur-md text-white border border-white/30 px-8 md:px-10 py-4 md:py-5 rounded-full font-black text-[10px] md:text-sm uppercase tracking-widest hover:bg-white hover:text-oba-dark transition-all">
+              Teklif İste
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className="bg-oba-dark py-10 border-b border-white/5">
+        <div className="container mx-auto px-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-y-8 gap-x-4">
+            <StatItem icon={<Building size={18} />} value="500+" label="Proje" />
+            <StatItem icon={<Users size={18} />} value="100%" label="Memnuniyet" />
+            <StatItem icon={<Globe size={18} />} value="81" label="Şehir" />
+            <StatItem icon={<CheckCircle2 size={18} />} value="2 Yıl" label="Garanti" />
+          </div>
+        </div>
+      </section>
+
+      {/* Services Section */}
+      <section className="py-20 md:py-32 bg-white">
+        <div className="container mx-auto px-6">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
+            <div className="max-w-2xl">
+              <h2 className="text-oba-orange font-bold tracking-[0.2em] uppercase mb-4 text-[10px] md:text-xs">Hizmetlerimiz</h2>
+              <h3 className="text-3xl md:text-5xl font-black text-oba-dark tracking-tighter leading-tight uppercase italic text-left text-left">
+                Hayallerinizi <br className="hidden md:block" /> Gerçeğe Dönüştürün
+              </h3>
+            </div>
+            <Link href="/hizmetler" className="group flex items-center gap-3 text-oba-dark font-bold text-xs md:text-sm uppercase tracking-widest pb-2 border-b-2 border-oba-orange hover:text-oba-orange transition-colors">
+              Tümü <ArrowRight size={16} />
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <ServiceCard title="Çelik Villalar" description="Modern mimari ve çelik sağlamlığıyla lüks yaşam alanları." image="/assets/images/oba-celik-yapi-3d-cizim.jpeg" number="01" />
+            <ServiceCard title="Prefabrik" description="Hızlı ve ekonomik modüler konut çözümleri." image="/assets/images/oba-celik-yapi-proje1-(1).webp" number="02" />
+            <ServiceCard title="Endüstriyel" description="Geniş açıklıklı depo ve fabrika binaları." image="/assets/images/oba-celik-yapi-galeri-(1).jpeg" number="03" />
+          </div>
+        </div>
+      </section>
+
+      {/* Gallery Section - 2 columns mobile, 4 columns PC */}
+      <section className="py-20 md:py-32 bg-oba-dark overflow-hidden">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row justify-between items-center mb-12 gap-4">
+            <div className="text-center md:text-left">
+              <h2 className="text-oba-orange font-bold tracking-[0.2em] uppercase mb-2 text-[10px]">Portfolyo</h2>
+              <h3 className="text-3xl md:text-6xl font-black text-white tracking-tighter uppercase italic">Proje Galerisi</h3>
+            </div>
+            <p className="text-gray-400 text-xs md:text-sm font-medium max-w-xs text-center md:text-right italic">Büyütmek için görsele tıklayın.</p>
+          </div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-8">
+            {galleryItems.map((url, idx) => (
+              <motion.div 
+                key={idx} 
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                onClick={() => setSelectedImage(url)}
+                className="relative group rounded-2xl md:rounded-[2.5rem] overflow-hidden shadow-2xl cursor-zoom-in aspect-square"
+              >
+                <img src={url} alt="Oba Proje" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                <div className="absolute inset-0 bg-oba-orange/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                   <div className="w-8 h-8 md:w-16 md:h-16 bg-white rounded-full flex items-center justify-center text-oba-dark shadow-xl"><Maximize2 size={24} /></div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Dynamic Blog Section - 2 columns mobile, 3 columns PC */}
+      <section className="py-20 md:py-32 bg-white text-left">
+        <div className="container mx-auto px-4">
+          <div className="flex justify-between items-end mb-16">
+            <div className="text-left">
+              <h2 className="text-oba-orange font-bold tracking-[0.2em] uppercase mb-4 text-[10px] md:text-xs">Blog & Haberler</h2>
+              <h3 className="text-3xl md:text-5xl font-black text-oba-dark tracking-tighter uppercase italic text-left">Güncel Gelişmeler</h3>
+            </div>
+            <Link href="/blog" className="hidden sm:flex text-gray-400 font-bold hover:text-oba-orange transition-colors items-center gap-2 text-sm">Tüm Yazılar <ArrowRight size={18} /></Link>
+          </div>
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-10">
+            {latestPosts.map((post) => (
+              <Link href={`/blog/${post.id}`} key={post.id} className="group cursor-pointer block text-left">
+                <div className="relative h-40 md:h-64 rounded-2xl md:rounded-[2rem] overflow-hidden mb-4 md:mb-6 shadow-lg">
+                  <Image src={post.imageUrl || "/assets/images/oba-celik-yapi-galeri.png"} alt={post.title} fill className="object-cover group-hover:scale-110 transition duration-700" />
+                  <div className="absolute top-2 left-2 md:top-4 md:left-4 bg-white/95 px-2 md:px-3 py-0.5 md:py-1 rounded-lg text-[7px] md:text-[10px] font-black uppercase tracking-wider text-oba-orange">{post.category}</div>
+                </div>
+                <h4 className="text-xs md:text-xl font-bold text-oba-dark mb-2 leading-snug group-hover:text-oba-orange transition-colors line-clamp-2 uppercase italic text-left">{post.title}</h4>
+                <p className="hidden md:block text-gray-500 text-sm leading-relaxed line-clamp-2 mb-4 font-medium">{post.excerpt}</p>
+                <div className="inline-flex items-center gap-2 text-[10px] md:text-sm font-black text-oba-dark uppercase tracking-wide group-hover:gap-4 transition-all text-left">Oku <ArrowRight size={16} className="text-oba-orange" /></div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Lightbox Modal */}
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSelectedImage(null)} className="fixed inset-0 z-[9999] bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
+            <button className="absolute top-6 right-6 md:top-10 md:right-10 text-white hover:text-oba-orange transition-colors z-50"><X size={32} /></button>
+            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="relative w-full h-full flex items-center justify-center">
+              <img src={selectedImage} alt="Büyük Görsel" className="max-w-full max-h-full object-contain rounded-lg shadow-2xl" />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+function ServiceCard({ title, description, image, number }: any) {
+  return (
+    <div className="group bg-[#F8F9FC] rounded-2xl p-2 hover:bg-white hover:shadow-2xl transition-all duration-500 border border-transparent hover:border-gray-100 text-left">
+      <div className="relative h-48 md:h-64 rounded-xl md:rounded-[2rem] overflow-hidden mb-4 md:mb-8 text-left text-left">
+        <Image src={image} alt={title} fill className="object-cover group-hover:scale-105 transition duration-700" />
+        <div className="absolute top-3 right-3 w-8 h-8 md:w-12 md:h-12 bg-white rounded-full flex items-center justify-center font-black text-oba-dark text-sm md:text-lg shadow-lg">{number}</div>
+      </div>
+      <div className="px-3 md:px-6 pb-4 md:pb-8 text-left text-left">
+        <h4 className="text-base md:text-2xl font-black mb-2 md:mb-4 text-oba-dark tracking-tight group-hover:text-oba-orange transition-colors uppercase italic text-left">{title}</h4>
+        <p className="text-gray-500 font-medium leading-relaxed mb-4 text-[11px] md:text-sm text-left line-clamp-2 md:line-clamp-none">{description}</p>
+        <Link href="/hizmetler" className="inline-flex items-center gap-3 text-oba-dark font-bold text-[9px] md:text-xs uppercase tracking-widest group-hover:gap-5 transition-all text-left">
+          İncele <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-oba-orange text-white flex items-center justify-center"><ArrowRight size={12} /></div>
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+function StatItem({ icon, value, label }: any) {
+   return (
+      <div className="flex items-center gap-3 text-white text-left">
+         <div className="w-8 h-8 md:w-12 md:h-12 rounded-lg bg-white/10 flex items-center justify-center text-oba-orange flex-shrink-0 text-left">{icon}</div>
+         <div className="text-left text-left">
+            <div className="text-sm md:text-2xl font-black tracking-tighter italic text-left">{value}</div>
+            <div className="text-[7px] md:text-[10px] text-gray-400 font-bold uppercase tracking-widest text-left">{label}</div>
+         </div>
+      </div>
+   )
+}
