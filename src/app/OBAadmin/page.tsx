@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { 
   LayoutDashboard, 
   FileText, 
@@ -21,11 +22,13 @@ import {
 } from "lucide-react";
 
 export default function AdminDashboard() {
+  const router = useRouter();
   const [posts, setPosts] = useState<any[]>([]);
   const [gallery, setGallery] = useState<any[]>([]);
   const [activeTab, setActiveTab] = useState("blog");
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [authenticated, setAuthenticated] = useState(false);
   const [newPost, setNewPost] = useState({ title: "", category: "Rehber", excerpt: "", imageUrl: "" });
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState("");
@@ -34,9 +37,21 @@ export default function AdminDashboard() {
   const galleryInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    fetchPosts();
-    fetchGallery();
-  }, []);
+    // Check authentication
+    const auth = localStorage.getItem("oba_admin_auth");
+    if (auth !== "true") {
+      router.push("/OBAadmin/login");
+    } else {
+      setAuthenticated(true);
+      fetchPosts();
+      fetchGallery();
+    }
+  }, [router]);
+
+  const handleLogout = () => {
+    localStorage.removeItem("oba_admin_auth");
+    router.push("/OBAadmin/login");
+  };
 
   const fetchPosts = async () => {
     setLoading(true);
@@ -135,6 +150,14 @@ export default function AdminDashboard() {
     }
   };
 
+  if (!authenticated) {
+    return (
+      <div className="h-screen w-full flex items-center justify-center bg-[#F8F9FC]">
+        <Loader2 className="animate-spin text-oba-orange" size={48} />
+      </div>
+    );
+  }
+
   return (
     <div className="flex h-screen bg-[#F8F9FC] font-sans text-oba-dark">
       <aside className="w-72 bg-[#1A1C1E] text-white flex flex-col z-20 shadow-2xl">
@@ -152,10 +175,16 @@ export default function AdminDashboard() {
             <NavItem label="Mesajlar" active={activeTab === "messages"} onClick={() => setActiveTab("messages")} icon={<MessageSquare size={20} />} />
           </nav>
         </div>
-        <div className="mt-auto p-6 border-t border-white/5">
+        <div className="mt-auto p-6 border-t border-white/5 space-y-2">
           <Link href="/" className="flex items-center gap-3 text-gray-400 hover:text-white transition-all px-4 py-3 rounded-xl hover:bg-white/5">
             <ExternalLink size={18} /> <span className="text-sm font-medium">Sitede Gör</span>
           </Link>
+          <button 
+            onClick={handleLogout}
+            className="w-full flex items-center gap-3 text-red-400 hover:text-red-300 transition-all px-4 py-3 rounded-xl hover:bg-red-500/10"
+          >
+            <LogOut size={18} /> <span className="text-sm font-medium">Çıkış Yap</span>
+          </button>
         </div>
       </aside>
 
