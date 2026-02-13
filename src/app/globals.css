@@ -1,19 +1,23 @@
-﻿@import "tailwindcss";
+@import "tailwindcss";
+
+@theme {
+  --color-oba-orange: #EA6229;
+  --color-oba-light: #F6F6F6;
+  --color-oba-dark: #3D3D3D;
+  --color-background: #F6F6F6;
+  --color-foreground: #3D3D3D;
+}
+
+/* Custom Utilities */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
 
 :root {
   --background: #F6F6F6;
   --foreground: #3D3D3D;
-  --oba-orange: #EA6229;
-  --oba-light: #F6F6F6;
-  --oba-dark: #3D3D3D;
-}
-
-@theme inline {
-  --color-oba-orange: var(--oba-orange);
-  --color-oba-light: var(--oba-light);
-  --color-oba-dark: var(--oba-dark);
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
 }
 
 body {
