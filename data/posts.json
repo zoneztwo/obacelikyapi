@@ -1,29 +1,132 @@
 [
   {
-    "id": "1707570000001",
-    "title": "Çelik Villa Modelleri: 2026 Trendleri ve Avantajları",
-    "category": "Rehber",
-    "excerpt": "2026 yılında çelik villa sahibi olmanın avantajlarını, modern mimari trendlerini ve deprem güvenliği konusundaki üstünlüklerini keşfedin.",
-    "imageUrl": "/assets/images/oba-celik-yapi-3d-cizim.jpeg",
-    "date": "10.02.2026",
-    "status": "Yayında"
-  },
-  {
-    "id": "1707570000002",
-    "title": "Neden Hafif Çelik Yapı Tercih Etmelisiniz?",
-    "category": "Haberler",
-    "excerpt": "Hafif çelik yapı sistemlerinin inşaat süresini nasıl kısalttığını, enerji verimliliğini ve çevre dostu yapısını detaylıca inceliyoruz.",
-    "imageUrl": "/assets/images/oba-celik-yapi-proje1-(5).webp",
-    "date": "10.02.2026",
-    "status": "Yayında"
-  },
-  {
-    "id": "1707570000003",
-    "title": "Erzincan ve Çevresinde Güvenli Yapılaşma",
+    "title": "defef",
     "category": "Tamamlanan Projeler",
-    "excerpt": "Erzincan Çayırlı merkezli faaliyetlerimizde, bölgenin deprem riskine en uygun çözümler olan çelik yapıların önemini anlatıyoruz.",
-    "imageUrl": "/assets/images/oba-celik-yapi-galeri-(7).jpeg",
+    "excerpt": "asdas",
+    "imageUrl": "/uploads/1771006449832-oba-celik-yapi-85m2-konut-celik-ev-projesi-0.png",
+    "images": [
+      "/uploads/1771006449832-oba-celik-yapi-85m2-konut-celik-ev-projesi-0.png",
+      "/uploads/1771006451763-oba-celik-yapi-85m2-konut-celik-ev-projesi-0.webp"
+    ],
+    "date": "14.02.2026",
+    "status": "Yayında",
+    "id": "1771006453824",
+    "createdAt": "2026-02-13T18:14:13.824Z"
+  },
+  {
+    "id": "project-85m2-erzincan",
+    "title": "85m² Modern Çelik Ev Projesi - Erzincan",
+    "category": "Tamamlanan Projeler",
+    "excerpt": "Erzincan bölgesinde tamamladığımız 85 metrekarelik bu özel proje, kompakt tasarımı ve depreme dayanıklı hafif çelik yapısıyla güvenli bir yaşam alanı sunuyor. Modern iç mimarisi ve hızlı kurulum süreciyle öne çıkan modelimiz.",
+    "imageUrl": "/assets/images/oba-celik-yapi-proje1-(1).webp",
+    "date": "13.02.2026",
+    "status": "Yayında",
+    "images": [
+      "/assets/images/oba-celik-yapi-proje1-(2).webp",
+      "/assets/images/oba-celik-yapi-proje1-(3).webp",
+      "/assets/images/oba-celik-yapi-proje1-(4).webp",
+      "/assets/images/oba-celik-yapi-proje1-(5).webp",
+      "/assets/images/oba-celik-yapi-proje1-(6).webp",
+      "/assets/images/oba-celik-yapi-proje1-(7).webp",
+      "/assets/images/oba-celik-yapi-proje1-(8).webp",
+      "/assets/images/oba-celik-yapi-proje1-(9).webp",
+      "/assets/images/oba-celik-yapi-proje1-(10).webp"
+    ]
+  },
+  {
+    "id": "project-162m2-villa",
+    "title": "162m² Lüks Dubleks Çelik Villa Tasarımı",
+    "category": "Tamamlanan Projeler",
+    "excerpt": "Geniş aileler için tasarlanan 162 metrekarelik dubleks çelik villa projemiz. Yüksek tavanlı ferah salonu, modern dış cephe kaplamaları ve enerji verimliliği sağlayan izolasyon sistemleriyle lüksü çelikle buluşturuyoruz.",
+    "imageUrl": "/assets/images/oba-celik-yapi-galeri-(1).jpeg",
+    "date": "13.02.2026",
+    "status": "Yayında",
+    "images": [
+      "/assets/images/oba-celik-yapi-galeri-(2).jpeg",
+      "/assets/images/oba-celik-yapi-galeri-(3).jpeg"
+    ]
+  },
+  {
+    "id": "project-industrial-steel",
+    "title": "Endüstriyel Çelik Yapılar ve Ağır Çelik Fabrika Çözümleri",
+    "category": "Tamamlanan Projeler",
+    "excerpt": "Fabrika binaları, depolar ve hangarlar için geliştirdiğimiz geniş açıklıklı ağır çelik sistemler. Endüstriyel ihtiyaçlarınıza hızlı, ekonomik ve maksimum dayanıklılıkta çözümler sunuyoruz.",
+    "imageUrl": "/assets/images/oba-celik-yapi-Endüstriyel-konut-celik-endüstriyel-0.webp",
+    "date": "13.02.2026",
+    "status": "Yayında",
+    "images": [
+      "/assets/images/oba-celik-yapi-Endüstriyel-konut-celik-endüstriyel-1.webp"
+    ]
+  },
+  {
+    "id": "project-technical-drawings",
+    "title": "Çelik Yapılarda Teknik Çizim ve 3D Projelendirme",
+    "category": "Rehber",
+    "excerpt": "Hayalinizdeki yapının her detayını inşaat öncesinde dijital ortamda hazırlıyoruz. 3D modelleme, statik hesaplamalar ve mimari kroki çalışmalarımızla kusursuz sonuçlar elde ediyoruz.",
+    "imageUrl": "/assets/images/oba-celik-yapi-kroki-cizim.webp",
+    "date": "12.02.2026",
+    "status": "Yayında",
+    "images": [
+      "/assets/images/oba-celik-yapi-kroki-cizim2.webp",
+      "/assets/images/oba-celik-yapi-kroki-cizim4.webp",
+      "/assets/images/oba-celik-yapi-kroki-cizim5.webp",
+      "/assets/images/oba-celik-yapi-kroki-cizim6.webp",
+      "/assets/images/oba-celik-yapi-kroki-cizim7.webp",
+      "/assets/images/oba-celik-yapi-kroki-cizim8.webp"
+    ]
+  },
+  {
+    "id": "project-120m2-residence",
+    "title": "120m² Modern Çelik Rezidans Uygulaması",
+    "category": "Tamamlanan Projeler",
+    "excerpt": "Estetik ve konforun birleştiği 120 metrekarelik modern çelik rezidans projemiz. Modern dış cephe tasarımları ve fonksiyonel iç mekan planlamasıyla şehir yaşamına yeni bir soluk.",
+    "imageUrl": "/assets/images/oba-celik-yapi-galeri-(4).jpeg",
+    "date": "11.02.2026",
+    "status": "Yayında"
+  },
+  {
+    "id": "project-140m2-comfort",
+    "title": "140m² Çelik Konstrüksiyon Aile Evi",
+    "category": "Tamamlanan Projeler",
+    "excerpt": "Geniş yaşam alanları ve her detayı düşünülmüş oda planlamasıyla 140 metrekarelik aile evi projemiz. Çeliğin gücüyle gelen güvenli ve huzurlu bir yaşam.",
+    "imageUrl": "/assets/images/oba-celik-yapi-galeri-(5).jpeg",
     "date": "10.02.2026",
+    "status": "Yayında"
+  },
+  {
+    "id": "project-95m2-minimalist",
+    "title": "95m² Minimalist Tasarım Çelik Konut",
+    "category": "Tamamlanan Projeler",
+    "excerpt": "Sadelik ve şıklığı bir araya getiren 95 metrekarelik minimalist çelik ev projemiz. Az alanda çok fonksiyon sunan akıllı ev çözümleriyle tasarlandı.",
+    "imageUrl": "/assets/images/oba-celik-yapi-galeri-(6).jpeg",
+    "date": "10.02.2026",
+    "status": "Yayında"
+  },
+  {
+    "id": "project-local-architecture",
+    "title": "Bölgesel Mimari ve Modern Çelik Yapılar",
+    "category": "Tamamlanan Projeler",
+    "excerpt": "Erzincan ve çevresindeki yerel mimari dokuyu koruyarak inşa ettiğimiz modern çelik yapılar. İklim şartlarına tam uyum sağlayan özel yalıtım sistemleri.",
+    "imageUrl": "/assets/images/oba-celik-yapi-galeri-(7).jpeg",
+    "date": "09.02.2026",
+    "status": "Yayında"
+  },
+  {
+    "id": "project-compact-solutions",
+    "title": "Kompakt ve Hızlı Kurulum: Çelik Bağ Evi Modelleri",
+    "category": "Tamamlanan Projeler",
+    "excerpt": "Kısa sürede teslim edilen, ekonomik ve dayanıklı çelik bağ evi projelerimiz. Hafta sonu kaçamaklarınız için en güvenli ve konforlu çözüm.",
+    "imageUrl": "/assets/images/oba-celik-yapi-galeri-(8).jpeg",
+    "date": "09.02.2026",
+    "status": "Yayında"
+  },
+  {
+    "id": "project-future-steel",
+    "title": "Geleceğin Yapı Teknolojisi: Hafif Çelik Sistemler",
+    "category": "Rehber",
+    "excerpt": "Neden çelik yapı tercih etmelisiniz? Deprem güvenliği, geri dönüştürülebilir malzeme, hız ve estetik gibi avantajlarıyla çelik yapı teknolojisini yakından tanıyın.",
+    "imageUrl": "/assets/images/oba-celik-yapi-3d-cizim.jpeg",
+    "date": "08.02.2026",
     "status": "Yayında"
   }
 ]
