@@ -4,8 +4,6 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, Clock, Tag, Share2 } from "lucide-react";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "@/lib/firebase";
 
 export default function BlogPostClient({ id }: { id: string }) {
   const [post, setPost] = useState<any>(null);
@@ -14,11 +12,12 @@ export default function BlogPostClient({ id }: { id: string }) {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const docRef = doc(db, "posts", id);
-        const docSnap = await getDoc(docRef);
-
-        if (docSnap.exists()) {
-          setPost(docSnap.data());
+        const res = await fetch('/api/posts');
+        const posts = await res.json();
+        const foundPost = posts.find((p: any) => p.id === id);
+        
+        if (foundPost) {
+          setPost(foundPost);
         }
       } catch (error) {
         console.error("Error fetching post:", error);

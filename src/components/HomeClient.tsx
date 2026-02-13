@@ -5,8 +5,6 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, CheckCircle2, Building, Users, Globe, Maximize2, X, ShieldCheck } from "lucide-react";
-import { collection, query, orderBy, limit, getDocs } from "firebase/firestore";
-import { db } from "@/lib/firebase";
 
 export default function HomeClient() {
   const [latestPosts, setLatestPosts] = useState<any[]>([]);
@@ -16,10 +14,9 @@ export default function HomeClient() {
   useEffect(() => {
     const fetchLatestPosts = async () => {
       try {
-        const q = query(collection(db, "posts"), orderBy("createdAt", "desc"), limit(3));
-        const snapshot = await getDocs(q);
-        const posts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        setLatestPosts(posts);
+        const res = await fetch('/api/posts');
+        const data = await res.json();
+        setLatestPosts(data.slice(0, 3));
       } catch (error) {
         console.error("Error fetching posts:", error);
       }
@@ -27,10 +24,9 @@ export default function HomeClient() {
 
     const fetchGallery = async () => {
        try {
-        const q = query(collection(db, "gallery"), orderBy("createdAt", "desc"), limit(8));
-        const snapshot = await getDocs(q);
-        const images = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        setGallery(images);
+        const res = await fetch('/api/gallery');
+        const data = await res.json();
+        setGallery(data.slice(0, 8));
        } catch (error) {
          console.error("Error fetching gallery:", error);
        }

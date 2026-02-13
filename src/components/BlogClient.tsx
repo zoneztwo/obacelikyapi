@@ -4,8 +4,6 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Clock } from "lucide-react";
-import { collection, query, orderBy, getDocs } from "firebase/firestore";
-import { db } from "@/lib/firebase";
 
 export default function BlogClient() {
   const [posts, setPosts] = useState<any[]>([]);
@@ -14,10 +12,9 @@ export default function BlogClient() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
-        const snapshot = await getDocs(q);
-        const fetchedPosts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        setPosts(fetchedPosts);
+        const res = await fetch('/api/posts');
+        const data = await res.json();
+        setPosts(data);
       } catch (error) {
         console.error("Error fetching posts:", error);
       } finally {

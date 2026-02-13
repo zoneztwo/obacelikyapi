@@ -20,8 +20,21 @@ import {
 } from "lucide-react";
 
 import { db, storage } from "@/lib/firebase";
-import { collection, addDoc, getDocs, deleteDoc, doc, serverTimestamp, orderBy, query } from "firebase/firestore";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { 
+  LayoutDashboard, 
+  FileText, 
+  Image as ImageIcon, 
+  MessageSquare, 
+  Plus, 
+  Trash2, 
+  ExternalLink,
+  ChevronRight,
+  X,
+  LogOut,
+  Upload,
+  GalleryThumbnails,
+  Loader2
+} from "lucide-react";
 
 export default function AdminDashboard() {
   const router = useRouter();
@@ -58,13 +71,9 @@ export default function AdminDashboard() {
   const fetchPosts = async () => {
     setLoading(true);
     try {
-      const q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
-      const querySnapshot = await getDocs(q);
-      const fetchedPosts = querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-      setPosts(fetchedPosts);
+      const res = await fetch('/api/posts');
+      const data = await res.json();
+      setPosts(data);
     } catch (error) {
       console.error("Yükleme hatası:", error);
     } finally {
@@ -74,19 +83,15 @@ export default function AdminDashboard() {
 
   const fetchGallery = async () => {
     try {
-      const q = query(collection(db, "gallery"), orderBy("createdAt", "desc"));
-      const querySnapshot = await getDocs(q);
-      const fetchedGallery = querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-      setGallery(fetchedGallery);
+      const res = await fetch('/api/gallery');
+      const data = await res.json();
+      setGallery(data);
     } catch (error) {
       console.error("Galeri yükleme hatası:", error);
     }
   };
 
-  // Multiple File Upload Handler (Firebase Storage)
+  // Multiple File Upload Handler (Local Server)
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, target: "post" | "gallery") => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
@@ -100,23 +105,31 @@ export default function AdminDashboard() {
         const file = fileArray[i];
         setUploadProgress(`${i + 1} / ${fileArray.length} yükleniyor...`);
 
-        // Create a unique file name
-        const fileName = `${Date.now()}-${file.name}`;
-        const storageRef = ref(storage, `uploads/${fileName}`);
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const res = await fetch('/api/upload', {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (!res.ok) throw new Error('Yükleme başarısız');
         
-        // Upload file
-        const snapshot = await uploadBytes(storageRef, file);
-        const downloadURL = await getDownloadURL(snapshot.ref);
+        const data = await res.json();
+        const downloadURL = data.url;
 
         if (downloadURL) {
           if (target === "post") {
             uploadedUrls.push(downloadURL);
           } else {
-            // Add to Firestore Gallery Collection
-            await addDoc(collection(db, "gallery"), {
-              url: downloadURL,
-              title: file.name,
-              createdAt: serverTimestamp()
+            // Add to Local Gallery
+            await fetch('/api/gallery', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                url: downloadURL,
+                title: file.name
+              })
             });
           }
         }
@@ -146,12 +159,17 @@ export default function AdminDashboard() {
   const handleAddPost = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await addDoc(collection(db, "posts"), {
-        ...newPost,
-        date: new Date().toLocaleDateString("tr-TR"),
-        createdAt: serverTimestamp(),
-        status: "Yayında"
+      const res = await fetch('/api/posts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...newPost,
+          date: new Date().toLocaleDateString("tr-TR"),
+          status: "Yayında"
+        })
       });
+
+      if (!res.ok) throw new Error('Yazı eklenemedi');
       
       setShowModal(false);
       setNewPost({ title: "", category: "Rehber", excerpt: "", imageUrl: "", images: [] });
@@ -166,8 +184,12 @@ export default function AdminDashboard() {
   const deletePost = async (id: string) => {
     if (confirm("Bu yazıyı silmek istediğinize emin misiniz?")) {
       try {
-        await deleteDoc(doc(db, "posts", id));
-        fetchPosts();
+        const res = await fetch('/api/posts', {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id })
+        });
+        if (res.ok) fetchPosts();
       } catch (err) {
         alert("Silme işlemi başarısız.");
       }
@@ -177,8 +199,12 @@ export default function AdminDashboard() {
   const deleteGalleryItem = async (id: string) => {
     if (confirm("Bu görseli galeriden silmek istiyor musunuz?")) {
       try {
-        await deleteDoc(doc(db, "gallery", id));
-        fetchGallery();
+        const res = await fetch('/api/gallery', {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id })
+        });
+        if (res.ok) fetchGallery();
       } catch (err) {
         alert("Silme işlemi başarısız.");
       }
