@@ -3,19 +3,15 @@ const { parse } = require('url');
 const next = require('next');
 
 const dev = process.env.NODE_ENV !== 'production';
-const hostname = 'localhost';
-const port = process.env.PORT || 3000;
-
-const app = next({ dev, hostname, port });
+const app = next({ dev });
 const handle = app.getRequestHandler();
+
+const port = process.env.PORT || 3000;
 
 app.prepare().then(() => {
   createServer(async (req, res) => {
     try {
       const parsedUrl = parse(req.url, true);
-      const { pathname, query } = parsedUrl;
-
-      // Next.js'in tüm istekleri (statik dosyalar dahil) işlemesine izin ver
       await handle(req, res, parsedUrl);
     } catch (err) {
       console.error('Error occurred handling', req.url, err);
@@ -24,10 +20,13 @@ app.prepare().then(() => {
     }
   })
     .once('error', (err) => {
-      console.error(err);
+      console.error('Server error:', err);
       process.exit(1);
     })
     .listen(port, () => {
-      console.log(`> Ready on http://${hostname}:${port}`);
+      console.log(`> Ready on port ${port}`);
     });
+}).catch((err) => {
+    console.error('Error during app.prepare():', err);
+    process.exit(1);
 });
