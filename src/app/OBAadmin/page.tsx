@@ -19,23 +19,6 @@ import {
   Loader2
 } from "lucide-react";
 
-import { db, storage } from "@/lib/firebase";
-import { 
-  LayoutDashboard, 
-  FileText, 
-  Image as ImageIcon, 
-  MessageSquare, 
-  Plus, 
-  Trash2, 
-  ExternalLink,
-  ChevronRight,
-  X,
-  LogOut,
-  Upload,
-  GalleryThumbnails,
-  Loader2
-} from "lucide-react";
-
 export default function AdminDashboard() {
   const router = useRouter();
   const [posts, setPosts] = useState<any[]>([]);
