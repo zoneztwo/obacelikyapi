@@ -54,6 +54,18 @@ export default function BlogPostDetail() {
               <p>
                 Oba Çelik Yapı kalitesiyle inşa edilen tüm yapılarımızda olduğu gibi, bu içeriğimizde de modern çelik yapı sistemlerinin hayatımıza kattığı değeri ve mühendislik vizyonumuzu sizlerle paylaşıyoruz. 
               </p>
+              
+              {/* Image Gallery */}
+              {post.images && post.images.length > 0 && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-16 not-prose">
+                  {post.images.map((img: string, idx: number) => (
+                    <div key={idx} className="relative aspect-video rounded-3xl overflow-hidden shadow-lg border border-gray-100 group">
+                      <Image src={img} alt={`${post.title} - ${idx + 1}`} fill className="object-cover transition-transform duration-500 group-hover:scale-110" />
+                    </div>
+                  ))}
+                </div>
+              )}
+
               <p>
                 Detaylı bilgi ve projelendirme süreçleri için uzman ekiplerimizle her zaman iletişime geçebilirsiniz. Geleceği çelikle inşa ederken güvenliğiniz ve konforunuz bizim önceliğimizdir.
               </p>

@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, CheckCircle2, Building, Users, Globe, Maximize2, X } from "lucide-react";
+import { ArrowRight, CheckCircle2, Building, Users, Globe, Maximize2, X, ShieldCheck } from "lucide-react";
 
 export default function Home() {
   const [latestPosts, setLatestPosts] = useState<any[]>([]);
@@ -55,7 +55,7 @@ export default function Home() {
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-oba-orange to-orange-300">Çelikle İnşa Et</span>
           </h1>
           <p className="text-sm md:text-2xl mb-10 max-w-2xl mx-auto text-gray-200 font-medium leading-relaxed px-4 text-center">
-            Türkiye'nin her noktasında estetik, dayanıklı ve hızlı kurulumlu çelik villa çözümleri.
+            Türkiye'nin her noktasında estetik, dayanıklı ve hızlı kurulumlu çelik ev çözümleri.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4 md:gap-6">
             <Link href="/hizmetler" className="bg-oba-orange text-white px-8 md:px-10 py-4 md:py-5 rounded-full font-black text-[10px] md:text-sm uppercase tracking-widest hover:bg-[#D45520] transition-all hover:scale-105 shadow-2xl">
@@ -81,23 +81,114 @@ export default function Home() {
       </section>
 
       {/* Services Section */}
-      <section className="py-20 md:py-32 bg-white">
+      <section id="hizmetler" className="py-20 md:py-32 bg-white">
         <div className="container mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
-            <div className="max-w-2xl">
-              <h2 className="text-oba-orange font-bold tracking-[0.2em] uppercase mb-4 text-[10px] md:text-xs">Hizmetlerimiz</h2>
-              <h3 className="text-3xl md:text-5xl font-black text-oba-dark tracking-tighter leading-tight uppercase italic text-left text-left">
-                Hayallerinizi <br className="hidden md:block" /> Gerçeğe Dönüştürün
-              </h3>
-            </div>
-            <Link href="/hizmetler" className="group flex items-center gap-3 text-oba-dark font-bold text-xs md:text-sm uppercase tracking-widest pb-2 border-b-2 border-oba-orange hover:text-oba-orange transition-colors">
-              Tümü <ArrowRight size={16} />
-            </Link>
+          <div className="text-center mb-24">
+            <h2 className="text-oba-orange font-bold tracking-[0.2em] uppercase mb-4 text-[10px] md:text-xs">Hizmetlerimiz</h2>
+            <h3 className="text-3xl md:text-6xl font-black text-oba-dark tracking-tighter leading-tight uppercase italic">
+              Hayallerinizi Geleceğin <br className="hidden md:block" /> Teknolojisiyle İnşa Ediyoruz
+            </h3>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <ServiceCard title="Çelik Villalar" description="Modern mimari ve çelik sağlamlığıyla lüks yaşam alanları." image="/assets/images/oba-celik-yapi-3d-cizim.jpeg" number="01" />
-            <ServiceCard title="Prefabrik" description="Hızlı ve ekonomik modüler konut çözümleri." image="/assets/images/oba-celik-yapi-proje1-(1).webp" number="02" />
-            <ServiceCard title="Endüstriyel" description="Geniş açıklıklı depo ve fabrika binaları." image="/assets/images/oba-celik-yapi-galeri-(1).jpeg" number="03" />
+          
+          <div className="space-y-32">
+            {/* Service 1: Çelik Evler */}
+            <div className="flex flex-col lg:flex-row gap-16 items-center">
+              <div className="flex-1 space-y-8 text-left">
+                <div className="inline-block px-4 py-1.5 bg-oba-orange/10 text-oba-orange rounded-full text-[10px] font-black uppercase tracking-[0.2em]">
+                  Estetik ve Güvenin Buluşma Noktası
+                </div>
+                <h2 className="text-4xl md:text-5xl font-black text-oba-dark tracking-tighter uppercase italic text-left">Lüks Çelik Evler</h2>
+                <p className="text-gray-500 text-lg leading-relaxed font-medium text-left">Hayalinizdeki lüks yaşam alanını çeliğin sarsılmaz gücüyle inşa ediyoruz. Depreme tam dayanıklı, kişiye özel mimari tasarımlarımızla konforu ve prestiji bir arada sunuyoruz. İnce işçilik ve modern detaylarla bezenmiş evlerimiz, nesiller boyu güvenle yaşayacağınız yuvalar sunar.</p>
+                <ul className="space-y-4">
+                  <li className="flex items-center gap-4 text-oba-dark font-bold text-sm uppercase italic">
+                    <div className="w-6 h-6 rounded-full bg-oba-orange text-white flex items-center justify-center flex-shrink-0"><ShieldCheck size={14} /></div>
+                    Depreme %100 Dayanıklılık
+                  </li>
+                  <li className="flex items-center gap-4 text-oba-dark font-bold text-sm uppercase italic">
+                    <div className="w-6 h-6 rounded-full bg-oba-orange text-white flex items-center justify-center flex-shrink-0"><ShieldCheck size={14} /></div>
+                    Esnek Mimari Tasarım
+                  </li>
+                  <li className="flex items-center gap-4 text-oba-dark font-bold text-sm uppercase italic">
+                    <div className="w-6 h-6 rounded-full bg-oba-orange text-white flex items-center justify-center flex-shrink-0"><ShieldCheck size={14} /></div>
+                    Yüksek Isı ve Ses Yalıtımı
+                  </li>
+                </ul>
+                <Link href="/iletisim" className="inline-flex items-center gap-3 text-oba-dark font-black text-sm uppercase tracking-widest border-b-4 border-oba-orange pb-2 hover:text-oba-orange transition-colors">
+                  Teklif Al <ArrowRight size={18} />
+                </Link>
+              </div>
+              <div className="flex-1 w-full">
+                <div className="relative h-[400px] md:h-[600px] rounded-[3rem] overflow-hidden shadow-2xl">
+                  <Image src="/assets/images/oba-celik-yapi-proje1-(9).webp" alt="Çelik Evler" fill className="object-cover" />
+                </div>
+              </div>
+            </div>
+
+            {/* Service 2: Hafif Çelik */}
+            <div className="flex flex-col lg:flex-row-reverse gap-16 items-center">
+              <div className="flex-1 space-y-8 text-left">
+                <div className="inline-block px-4 py-1.5 bg-oba-orange/10 text-oba-orange rounded-full text-[10px] font-black uppercase tracking-[0.2em]">
+                  Yeni Nesil Yapı Standartları
+                </div>
+                <h2 className="text-4xl md:text-5xl font-black text-oba-dark tracking-tighter uppercase italic text-left">Hafif Çelik Teknolojisi</h2>
+                <p className="text-gray-500 text-lg leading-relaxed font-medium text-left">Geleceğin yapı teknolojisi olan hafif çelik sistemler ile hem çevre dostu hem de son derece dayanıklı binalar inşa ediyoruz. Galvanizli çelik profiller kullanılarak üretilen bu yapılar, korozyona karşı dirençli ve uzun ömürlüdür.</p>
+                <ul className="space-y-4">
+                  <li className="flex items-center gap-4 text-oba-dark font-bold text-sm uppercase italic">
+                    <div className="w-6 h-6 rounded-full bg-oba-orange text-white flex items-center justify-center flex-shrink-0"><ShieldCheck size={14} /></div>
+                    Korozyona Karşı Direnç
+                  </li>
+                  <li className="flex items-center gap-4 text-oba-dark font-bold text-sm uppercase italic">
+                    <div className="w-6 h-6 rounded-full bg-oba-orange text-white flex items-center justify-center flex-shrink-0"><ShieldCheck size={14} /></div>
+                    %100 Geri Dönüştürülebilir
+                  </li>
+                  <li className="flex items-center gap-4 text-oba-dark font-bold text-sm uppercase italic">
+                    <div className="w-6 h-6 rounded-full bg-oba-orange text-white flex items-center justify-center flex-shrink-0"><ShieldCheck size={14} /></div>
+                    Hassas Milimetrik Üretim
+                  </li>
+                </ul>
+                <Link href="/iletisim" className="inline-flex items-center gap-3 text-oba-dark font-black text-sm uppercase tracking-widest border-b-4 border-oba-orange pb-2 hover:text-oba-orange transition-colors">
+                  Teklif Al <ArrowRight size={18} />
+                </Link>
+              </div>
+              <div className="flex-1 w-full">
+                <div className="relative h-[400px] md:h-[600px] rounded-[3rem] overflow-hidden shadow-2xl">
+                  <Image src="/assets/images/oba-celik-yapi-proje1-(1).webp" alt="Hafif Çelik" fill className="object-cover" />
+                </div>
+              </div>
+            </div>
+
+            {/* Service 3: Endüstriyel */}
+            <div className="flex flex-col lg:flex-row gap-16 items-center">
+              <div className="flex-1 space-y-8 text-left">
+                <div className="inline-block px-4 py-1.5 bg-oba-orange/10 text-oba-orange rounded-full text-[10px] font-black uppercase tracking-[0.2em]">
+                  Geniş Açıklıklı Ticari Çözümler
+                </div>
+                <h2 className="text-4xl md:text-5xl font-black text-oba-dark tracking-tighter uppercase italic text-left">Endüstriyel Yapılar</h2>
+                <p className="text-gray-500 text-lg leading-relaxed font-medium text-left">Fabrika binaları, depolar, hangarlar ve spor tesisleri için geniş açıklıklı ağır çelik konstrüksiyon sistemler üretiyoruz. İşletmenizin ihtiyaçlarına göre optimize edilmiş statik hesaplamalarla, en ağır yükleri taşıyabilen işlevsel ve dayanıklı alanlar yaratıyoruz.</p>
+                <ul className="space-y-4">
+                  <li className="flex items-center gap-4 text-oba-dark font-bold text-sm uppercase italic">
+                    <div className="w-6 h-6 rounded-full bg-oba-orange text-white flex items-center justify-center flex-shrink-0"><ShieldCheck size={14} /></div>
+                    Geniş Açıklıklı Sistemler
+                  </li>
+                  <li className="flex items-center gap-4 text-oba-dark font-bold text-sm uppercase italic">
+                    <div className="w-6 h-6 rounded-full bg-oba-orange text-white flex items-center justify-center flex-shrink-0"><ShieldCheck size={14} /></div>
+                    Ağır Yük Taşıma Kapasitesi
+                  </li>
+                  <li className="flex items-center gap-4 text-oba-dark font-bold text-sm uppercase italic">
+                    <div className="w-6 h-6 rounded-full bg-oba-orange text-white flex items-center justify-center flex-shrink-0"><ShieldCheck size={14} /></div>
+                    Hızlı Montaj Süreci
+                  </li>
+                </ul>
+                <Link href="/iletisim" className="inline-flex items-center gap-3 text-oba-dark font-black text-sm uppercase tracking-widest border-b-4 border-oba-orange pb-2 hover:text-oba-orange transition-colors">
+                  Teklif Al <ArrowRight size={18} />
+                </Link>
+              </div>
+              <div className="flex-1 w-full">
+                <div className="relative h-[400px] md:h-[600px] rounded-[3rem] overflow-hidden shadow-2xl">
+                  <Image src="/assets/images/oba-celik-yapi-Endüstriyel-konut-celik-endüstriyel-0.webp" alt="Endüstriyel Yapılar" fill className="object-cover" />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>

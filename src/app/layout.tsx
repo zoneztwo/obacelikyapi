@@ -16,6 +16,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Oba Çelik Yapı | Çelik Yapı ve Prefabrik Çözümleri",
   description: "Türkiye genelinde en üst segment çelik yapı, prefabrik ev ve endüstriyel çözümler sunan Oba Çelik Yapı kurumsal web sitesi.",
+  icons: {
+    icon: "/assets/logos/favicon.webp",
+  },
 };
 
 export default function RootLayout({

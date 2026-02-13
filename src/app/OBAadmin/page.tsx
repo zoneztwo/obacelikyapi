@@ -29,7 +29,7 @@ export default function AdminDashboard() {
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const [authenticated, setAuthenticated] = useState(false);
-  const [newPost, setNewPost] = useState({ title: "", category: "Rehber", excerpt: "", imageUrl: "" });
+  const [newPost, setNewPost] = useState({ title: "", category: "Rehber", excerpt: "", imageUrl: "", images: [] as string[] });
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState("");
   
@@ -83,13 +83,12 @@ export default function AdminDashboard() {
 
     setUploading(true);
     const fileArray = Array.from(files);
+    const uploadedUrls: string[] = [];
     
     try {
       for (let i = 0; i < fileArray.length; i++) {
         const file = fileArray[i];
-        if (fileArray.length > 1) {
-          setUploadProgress(`${i + 1} / ${fileArray.length} yükleniyor...`);
-        }
+        setUploadProgress(`${i + 1} / ${fileArray.length} yükleniyor...`);
 
         const formData = new FormData();
         formData.append("file", file);
@@ -99,9 +98,7 @@ export default function AdminDashboard() {
 
         if (data.url) {
           if (target === "post") {
-            setNewPost({ ...newPost, imageUrl: data.url });
-            // For single post image, we stop after first successful upload
-            break; 
+            uploadedUrls.push(data.url);
           } else {
             // Add to gallery
             await fetch("/api/gallery", {
@@ -113,7 +110,13 @@ export default function AdminDashboard() {
         }
       }
       
-      if (target === "gallery") {
+      if (target === "post") {
+        setNewPost(prev => ({
+          ...prev,
+          images: [...prev.images, ...uploadedUrls],
+          imageUrl: prev.imageUrl || uploadedUrls[0] || ""
+        }));
+      } else if (target === "gallery") {
         fetchGallery();
         alert(`${fileArray.length} görsel başarıyla işlendi.`);
       }
@@ -122,6 +125,7 @@ export default function AdminDashboard() {
     } finally {
       setUploading(false);
       setUploadProgress("");
+      if (fileInputRef.current) fileInputRef.current.value = "";
       if (galleryInputRef.current) galleryInputRef.current.value = "";
     }
   };
@@ -136,7 +140,7 @@ export default function AdminDashboard() {
       });
       if (res.ok) {
         setShowModal(false);
-        setNewPost({ title: "", category: "Rehber", excerpt: "", imageUrl: "" });
+        setNewPost({ title: "", category: "Rehber", excerpt: "", imageUrl: "", images: [] });
         fetchPosts();
       }
     } catch (err) {
@@ -146,7 +150,18 @@ export default function AdminDashboard() {
 
   const deletePost = async (id: string) => {
     if (confirm("Bu yazıyı silmek istediğinize emin misiniz?")) {
-      setPosts(posts.filter(p => p.id !== id));
+      try {
+        const res = await fetch("/api/blog", {
+          method: "DELETE",
+          body: JSON.stringify({ id }),
+          headers: { "Content-Type": "application/json" }
+        });
+        if (res.ok) {
+          fetchPosts();
+        }
+      } catch (err) {
+        alert("Silme işlemi başarısız.");
+      }
     }
   };
 
@@ -297,14 +312,48 @@ export default function AdminDashboard() {
                     <option>Rehber</option><option>Haberler</option><option>Tamamlanan Projeler</option>
                 </select>
                 <textarea rows={3} placeholder="İçerik özeti..." className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl font-bold resize-none focus:ring-2 focus:ring-oba-orange outline-none transition-all" value={newPost.excerpt} onChange={(e) => setNewPost({...newPost, excerpt: e.target.value})}></textarea>
+                
+                {/* Image Gallery in Modal */}
+                {newPost.images.length > 0 && (
+                  <div className="grid grid-cols-4 gap-3 mb-4">
+                    {newPost.images.map((url, index) => (
+                      <div key={index} className={`relative aspect-square rounded-xl overflow-hidden border-2 transition-all ${newPost.imageUrl === url ? "border-oba-orange shadow-lg shadow-oba-orange/20" : "border-gray-100"}`}>
+                        <img src={url} alt={`Blog ${index}`} className="w-full h-full object-cover" onClick={() => setNewPost({...newPost, imageUrl: url})} />
+                        <button 
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            const updatedImages = newPost.images.filter((_, i) => i !== index);
+                            let updatedCover = newPost.imageUrl;
+                            if (newPost.imageUrl === url) {
+                              updatedCover = updatedImages[0] || "";
+                            }
+                            setNewPost({...newPost, images: updatedImages, imageUrl: updatedCover});
+                          }}
+                          className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full hover:scale-110 transition-transform"
+                        >
+                          <X size={12} />
+                        </button>
+                        {newPost.imageUrl === url && (
+                          <div className="absolute bottom-0 inset-x-0 bg-oba-orange text-white text-[8px] font-black uppercase text-center py-0.5 tracking-widest">Kapak</div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+
                 <div onClick={() => fileInputRef.current?.click()} className="p-6 border-2 border-dashed border-gray-200 rounded-2xl text-center cursor-pointer hover:border-oba-orange/50 hover:bg-oba-orange/[0.02] transition-all group">
-                   <input type="file" ref={fileInputRef} className="hidden" accept="image/*" onChange={(e) => handleFileUpload(e, "post")} />
+                   <input type="file" ref={fileInputRef} className="hidden" accept="image/*" multiple onChange={(e) => handleFileUpload(e, "post")} />
                    {uploading ? (
-                     <div className="flex items-center justify-center gap-2 text-oba-orange font-bold animate-pulse"><Loader2 className="animate-spin" /> Yükleniyor...</div>
-                   ) : newPost.imageUrl ? (
-                     <span className="text-green-500 font-bold flex items-center justify-center gap-2"><CheckCircle2 size={18} /> Görsel Hazır</span>
+                     <div className="flex items-center justify-center gap-2 text-oba-orange font-bold animate-pulse">
+                       <Loader2 className="animate-spin" size={18} /> 
+                       <span className="text-xs uppercase tracking-widest">{uploadProgress || "Yükleniyor..."}</span>
+                     </div>
                    ) : (
-                     <span className="text-gray-400 font-bold uppercase text-[10px] tracking-[0.2em] group-hover:text-oba-orange transition-colors">Kapak Görseli Seç</span>
+                     <div className="space-y-1">
+                        <span className="text-gray-400 font-bold uppercase text-[10px] tracking-[0.2em] group-hover:text-oba-orange transition-colors block">Fotoğraf Ekle</span>
+                        <span className="text-gray-300 text-[9px] uppercase tracking-wider block">Birden fazla seçebilirsiniz</span>
+                     </div>
                    )}
                 </div>
                 <button type="submit" disabled={uploading} className="w-full py-5 bg-oba-orange text-white font-black rounded-2xl shadow-xl shadow-oba-orange/30 hover:bg-[#D45520] transition-all disabled:opacity-50 uppercase tracking-widest text-xs">Yayınla</button>

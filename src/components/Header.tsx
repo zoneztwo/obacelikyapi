@@ -37,7 +37,7 @@ export default function Header({ forceDark = false }: { forceDark?: boolean }) {
   const navLinks = [
     { name: "Anasayfa", href: "/" },
     { name: "Hakkımızda", href: "/hakkimizda" },
-    { name: "Hizmetler", href: "/hizmetler" },
+    { name: "Hizmetler", href: "/#hizmetler" },
     { name: "Blog", href: "/blog" },
     { name: "İletişim", href: "/iletisim" },
   ];

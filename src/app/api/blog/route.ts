@@ -52,3 +52,21 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
+
+export async function DELETE(request: Request) {
+  try {
+    const { id } = await request.json();
+    const filePath = path.join(process.cwd(), "data", "posts.json");
+    
+    if (fs.existsSync(filePath)) {
+      const data = fs.readFileSync(filePath, "utf8");
+      let posts = JSON.parse(data);
+      posts = posts.filter((p: any) => p.id !== id);
+      fs.writeFileSync(filePath, JSON.stringify(posts, null, 2), "utf8");
+    }
+
+    return NextResponse.json({ success: true });
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
