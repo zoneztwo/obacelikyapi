@@ -65,8 +65,8 @@ export default function Iletisim() {
                 <div className="space-y-2 md:col-span-2">
                   <label className="text-[10px] font-black uppercase text-gray-400 tracking-widest ml-1">İlgilendiğiniz Hizmet</label>
                   <select className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl focus:ring-2 focus:ring-oba-orange outline-none transition-all font-bold appearance-none">
-                    <option>Çelik Villa Projesi</option>
-                    <option>Prefabrik Ev</option>
+                    <option>Çelik Ev Projesi</option>
+                    <option>Hafif Çelik Ev</option>
                     <option>Endüstriyel Yapı</option>
                     <option>Diğer</option>
                   </select>

@@ -17,7 +17,7 @@ export default function Footer() {
               />
             </div>
             <p className="text-gray-400 text-sm leading-relaxed font-medium">
-              Türkiye genelinde en üst segment çelik yapı ve prefabrik ev çözümleri sunuyoruz. Kalite, estetik ve güvenin adresi.
+              Türkiye genelinde en üst segment çelik ev ve yapı sistemleri çözümleri sunuyoruz. Kalite, estetik ve güvenin adresi.
             </p>
           </div>
           <div>
@@ -32,10 +32,10 @@ export default function Footer() {
           <div>
             <h4 className="text-lg font-black mb-8 border-b-2 border-oba-orange pb-2 inline-block uppercase tracking-widest">Hizmetlerimiz</h4>
             <ul className="space-y-4 text-gray-400 font-bold text-sm">
-              <li>Çelik Villa Modelleri</li>
-              <li>Prefabrik Ev Çözümleri</li>
-              <li>Endüstriyel Çelik Yapılar</li>
+              <li>Çelik Ev Modelleri</li>
               <li>Hafif Çelik Sistemler</li>
+              <li>Endüstriyel Çelik Yapılar</li>
+              <li>Lüks Yaşam Alanları</li>
             </ul>
           </div>
           <div>

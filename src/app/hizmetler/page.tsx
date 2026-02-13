@@ -32,13 +32,13 @@ export default function Hizmetler() {
             reversed={false}
           />
 
-          {/* Service 2: Prefabrik Evler */}
+          {/* Service 2: Hafif Çelik Evler */}
           <ServiceDetail 
-            title="Prefabrik Ev Sistemleri"
-            subtitle="Hızlı, Ekonomik ve Konforlu"
-            description="Zamanın ve bütçenin kıymetini bilenler için modüler prefabrik çözümler sunuyoruz. Kısa sürede fabrikada üretilip yerinde montajı yapılan evlerimiz, dört mevsim yüksek performans sağlar. Tatil evlerinden kalıcı konutlara kadar geniş bir yelpazede hizmetinizdeyiz."
+            title="Hafif Çelik Ev Sistemleri"
+            subtitle="Hızlı, Güvenli ve Modern"
+            description="Zamanın ve güvenliğin kıymetini bilenler için hafif çelik konut çözümleri sunuyoruz. İleri teknoloji ile fabrikada üretilip yerinde montajı yapılan evlerimiz, yüksek deprem güvenliği ve dört mevsim konfor sağlar. Estetik tasarımlarımızla modern yaşamın kapılarını aralıyoruz."
             image="/assets/images/oba-celik-yapi-proje1-(1).webp"
-            features={["Hızlı Kurulum ve Teslimat", "Ekonomik Maliyet Avantajı", "Düşük Bakım Gereksinimi"]}
+            features={["Hızlı Kurulum ve Teslimat", "Yüksek Deprem Güvenliği", "Düşük Bakım Gereksinimi"]}
             reversed={true}
           />
 
