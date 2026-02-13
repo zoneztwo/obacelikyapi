@@ -7,10 +7,9 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  cleanDistDir: true,
-  generateBuildId: async () => {
-    return `build-${Date.now()}`;
-  },
+  images: {
+    unoptimized: true,
+  }
 };
 
 export default nextConfig;
