@@ -21,12 +21,9 @@ export const metadata: Metadata = {
   title: "Oba Çelik Yapı | Premium Çelik Ev ve Yapı Sistemleri",
   description: "Türkiye genelinde en üst segment çelik ev, hafif çelik ve endüstriyel yapı çözümleri sunan Oba Çelik Yapı kurumsal web sitesi.",
   icons: {
-    icon: [
-      { url: "/assets/logos/favicon.webp", type: "image/webp" },
-    ],
-    apple: [
-      { url: "/assets/logos/favicon.webp", type: "image/webp" },
-    ],
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/favicon.ico",
   },
 };
 
