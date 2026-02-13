@@ -12,8 +12,8 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-  // Hostinger ve benzeri platformlar için asset prefix sorunlarını engellemek adına
-  trailingSlash: true,
+  // GitHub Pages için trailingSlash bazen CSS yollarını bozabilir, kapatıp deneyelim
+  trailingSlash: false,
 };
 
 export default nextConfig;
