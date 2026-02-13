@@ -2,7 +2,6 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
-  output: "export",
   // trailingSlash: true, statik sitelerde (GitHub Pages) daha kararlı çalışır
   trailingSlash: true,
   images: {

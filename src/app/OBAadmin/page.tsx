@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
@@ -10,16 +10,18 @@ import {
   MessageSquare, 
   Plus, 
   Trash2, 
-  Edit3, 
   ExternalLink,
   ChevronRight,
   X,
   LogOut,
   Upload,
-  CheckCircle2,
   GalleryThumbnails,
   Loader2
 } from "lucide-react";
+
+import { db, storage } from "@/lib/firebase";
+import { collection, addDoc, getDocs, deleteDoc, doc, serverTimestamp, orderBy, query } from "firebase/firestore";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 export default function AdminDashboard() {
   const router = useRouter();
@@ -56,9 +58,13 @@ export default function AdminDashboard() {
   const fetchPosts = async () => {
     setLoading(true);
     try {
-      const res = await fetch("/api/blog", { cache: "no-store" });
-      const data = await res.json();
-      setPosts(Array.isArray(data) ? data : []);
+      const q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
+      const querySnapshot = await getDocs(q);
+      const fetchedPosts = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setPosts(fetchedPosts);
     } catch (error) {
       console.error("Yükleme hatası:", error);
     } finally {
@@ -68,15 +74,19 @@ export default function AdminDashboard() {
 
   const fetchGallery = async () => {
     try {
-      const res = await fetch("/api/gallery", { cache: "no-store" });
-      const data = await res.json();
-      setGallery(Array.isArray(data) ? data : []);
+      const q = query(collection(db, "gallery"), orderBy("createdAt", "desc"));
+      const querySnapshot = await getDocs(q);
+      const fetchedGallery = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setGallery(fetchedGallery);
     } catch (error) {
       console.error("Galeri yükleme hatası:", error);
     }
   };
 
-  // Multiple File Upload Handler
+  // Multiple File Upload Handler (Firebase Storage)
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, target: "post" | "gallery") => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
@@ -90,21 +100,23 @@ export default function AdminDashboard() {
         const file = fileArray[i];
         setUploadProgress(`${i + 1} / ${fileArray.length} yükleniyor...`);
 
-        const formData = new FormData();
-        formData.append("file", file);
+        // Create a unique file name
+        const fileName = `${Date.now()}-${file.name}`;
+        const storageRef = ref(storage, `uploads/${fileName}`);
+        
+        // Upload file
+        const snapshot = await uploadBytes(storageRef, file);
+        const downloadURL = await getDownloadURL(snapshot.ref);
 
-        const res = await fetch("/api/upload", { method: "POST", body: formData });
-        const data = await res.json();
-
-        if (data.url) {
+        if (downloadURL) {
           if (target === "post") {
-            uploadedUrls.push(data.url);
+            uploadedUrls.push(downloadURL);
           } else {
-            // Add to gallery
-            await fetch("/api/gallery", {
-              method: "POST",
-              body: JSON.stringify({ url: data.url, title: file.name }),
-              headers: { "Content-Type": "application/json" }
+            // Add to Firestore Gallery Collection
+            await addDoc(collection(db, "gallery"), {
+              url: downloadURL,
+              title: file.name,
+              createdAt: serverTimestamp()
             });
           }
         }
@@ -118,9 +130,10 @@ export default function AdminDashboard() {
         }));
       } else if (target === "gallery") {
         fetchGallery();
-        alert(`${fileArray.length} görsel başarıyla işlendi.`);
+        alert(`${fileArray.length} görsel başarıyla galeriye eklendi.`);
       }
     } catch (error) {
+      console.error("Upload error:", error);
       alert("Yükleme sırasında bir hata oluştu.");
     } finally {
       setUploading(false);
@@ -133,32 +146,39 @@ export default function AdminDashboard() {
   const handleAddPost = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch("/api/blog", {
-        method: "POST",
-        body: JSON.stringify(newPost),
-        headers: { "Content-Type": "application/json" }
+      await addDoc(collection(db, "posts"), {
+        ...newPost,
+        date: new Date().toLocaleDateString("tr-TR"),
+        createdAt: serverTimestamp(),
+        status: "Yayında"
       });
-      if (res.ok) {
-        setShowModal(false);
-        setNewPost({ title: "", category: "Rehber", excerpt: "", imageUrl: "", images: [] });
-        fetchPosts();
-      }
+      
+      setShowModal(false);
+      setNewPost({ title: "", category: "Rehber", excerpt: "", imageUrl: "", images: [] });
+      fetchPosts();
+      alert("Yazı başarıyla yayınlandı!");
     } catch (err) {
-      alert("Bağlantı hatası.");
+      console.error("Post error:", err);
+      alert("Yazı eklenirken hata oluştu.");
     }
   };
 
   const deletePost = async (id: string) => {
     if (confirm("Bu yazıyı silmek istediğinize emin misiniz?")) {
       try {
-        const res = await fetch("/api/blog", {
-          method: "DELETE",
-          body: JSON.stringify({ id }),
-          headers: { "Content-Type": "application/json" }
-        });
-        if (res.ok) {
-          fetchPosts();
-        }
+        await deleteDoc(doc(db, "posts", id));
+        fetchPosts();
+      } catch (err) {
+        alert("Silme işlemi başarısız.");
+      }
+    }
+  };
+
+  const deleteGalleryItem = async (id: string) => {
+    if (confirm("Bu görseli galeriden silmek istiyor musunuz?")) {
+      try {
+        await deleteDoc(doc(db, "gallery", id));
+        fetchGallery();
       } catch (err) {
         alert("Silme işlemi başarısız.");
       }
@@ -279,7 +299,7 @@ export default function AdminDashboard() {
                     <div key={item.id} className="group relative aspect-square bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm">
                       <img src={item.url} alt="Galeri" className="w-full h-full object-cover transition-transform group-hover:scale-110" />
                       <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                         <button className="bg-red-500 text-white p-3 rounded-full hover:scale-110 transition-transform"><Trash2 size={20} /></button>
+                         <button onClick={() => deleteGalleryItem(item.id)} className="bg-red-500 text-white p-3 rounded-full hover:scale-110 transition-transform"><Trash2 size={20} /></button>
                       </div>
                     </div>
                   ))}
