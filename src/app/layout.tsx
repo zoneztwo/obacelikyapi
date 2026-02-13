@@ -1,7 +1,21 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import LayoutWrapper from "@/components/LayoutWrapper";
+
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+  display: "swap",
+  preload: false,
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+  display: "swap",
+  preload: false,
+});
 
 export const metadata: Metadata = {
   title: "Oba Çelik Yapı | Premium Çelik Ev ve Yapı Sistemleri",
@@ -19,9 +33,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="tr">
+    <html lang="tr" suppressHydrationWarning>
       <body
-        className="antialiased font-sans bg-oba-light text-oba-dark"
+        className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans bg-oba-light text-oba-dark`}
       >
         <LayoutWrapper>{children}</LayoutWrapper>
       </body>

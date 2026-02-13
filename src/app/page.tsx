@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -14,11 +14,13 @@ export default function Home() {
   useEffect(() => {
     fetch("/api/blog", { cache: "no-store" })
       .then(res => res.json())
-      .then(data => Array.isArray(data) && setLatestPosts(data.slice(-3).reverse()));
+      .then(data => Array.isArray(data) && setLatestPosts(data.slice(-3).reverse()))
+      .catch(() => {});
       
     fetch("/api/gallery", { cache: "no-store" })
       .then(res => res.json())
-      .then(data => Array.isArray(data) && setGallery(data));
+      .then(data => Array.isArray(data) && setGallery(data))
+      .catch(() => {});
   }, []);
 
   const defaultImages = [
@@ -35,7 +37,7 @@ export default function Home() {
   const galleryItems = gallery.length > 0 ? gallery.map(g => g.url) : defaultImages;
 
   return (
-    <div className="flex flex-col min-h-screen bg-white text-oba-dark text-left">
+    <div className="flex flex-col min-h-screen bg-white text-oba-dark">
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center text-white overflow-hidden">
         <Image
@@ -58,7 +60,7 @@ export default function Home() {
             Türkiye'nin her noktasında estetik, dayanıklı ve hızlı kurulumlu çelik ev çözümleri.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4 md:gap-6">
-            <Link href="/hizmetler" className="bg-oba-orange text-white px-8 md:px-10 py-4 md:py-5 rounded-full font-black text-[10px] md:text-sm uppercase tracking-widest hover:bg-[#D45520] transition-all hover:scale-105 shadow-2xl">
+            <Link href="/#hizmetler" className="bg-oba-orange text-white px-8 md:px-10 py-4 md:py-5 rounded-full font-black text-[10px] md:text-sm uppercase tracking-widest hover:bg-[#D45520] transition-all hover:scale-105 shadow-2xl">
               Projeleri İncele
             </Link>
             <Link href="/iletisim" className="bg-white/10 backdrop-blur-md text-white border border-white/30 px-8 md:px-10 py-4 md:py-5 rounded-full font-black text-[10px] md:text-sm uppercase tracking-widest hover:bg-white hover:text-oba-dark transition-all">
@@ -92,13 +94,13 @@ export default function Home() {
           
           <div className="space-y-32">
             {/* Service 1: Çelik Evler */}
-            <div className="flex flex-col lg:flex-row gap-16 items-center">
-              <div className="flex-1 space-y-8 text-left">
+            <div className="flex flex-col lg:flex-row gap-16 items-center text-left">
+              <div className="flex-1 space-y-8">
                 <div className="inline-block px-4 py-1.5 bg-oba-orange/10 text-oba-orange rounded-full text-[10px] font-black uppercase tracking-[0.2em]">
                   Estetik ve Güvenin Buluşma Noktası
                 </div>
-                <h2 className="text-4xl md:text-5xl font-black text-oba-dark tracking-tighter uppercase italic text-left">Lüks Çelik Evler</h2>
-                <p className="text-gray-500 text-lg leading-relaxed font-medium text-left">Hayalinizdeki lüks yaşam alanını çeliğin sarsılmaz gücüyle inşa ediyoruz. Depreme tam dayanıklı, kişiye özel mimari tasarımlarımızla konforu ve prestiji bir arada sunuyoruz. İnce işçilik ve modern detaylarla bezenmiş evlerimiz, nesiller boyu güvenle yaşayacağınız yuvalar sunar.</p>
+                <h2 className="text-4xl md:text-5xl font-black text-oba-dark tracking-tighter uppercase italic">Lüks Çelik Evler</h2>
+                <p className="text-gray-500 text-lg leading-relaxed font-medium">Hayalinizdeki lüks yaşam alanını çeliğin sarsılmaz gücüyle inşa ediyoruz. Depreme tam dayanıklı, kişiye özel mimari tasarımlarımızla konforu ve prestiji bir arada sunuyoruz.</p>
                 <ul className="space-y-4">
                   <li className="flex items-center gap-4 text-oba-dark font-bold text-sm uppercase italic">
                     <div className="w-6 h-6 rounded-full bg-oba-orange text-white flex items-center justify-center flex-shrink-0"><ShieldCheck size={14} /></div>
@@ -107,10 +109,6 @@ export default function Home() {
                   <li className="flex items-center gap-4 text-oba-dark font-bold text-sm uppercase italic">
                     <div className="w-6 h-6 rounded-full bg-oba-orange text-white flex items-center justify-center flex-shrink-0"><ShieldCheck size={14} /></div>
                     Esnek Mimari Tasarım
-                  </li>
-                  <li className="flex items-center gap-4 text-oba-dark font-bold text-sm uppercase italic">
-                    <div className="w-6 h-6 rounded-full bg-oba-orange text-white flex items-center justify-center flex-shrink-0"><ShieldCheck size={14} /></div>
-                    Yüksek Isı ve Ses Yalıtımı
                   </li>
                 </ul>
                 <Link href="/iletisim" className="inline-flex items-center gap-3 text-oba-dark font-black text-sm uppercase tracking-widest border-b-4 border-oba-orange pb-2 hover:text-oba-orange transition-colors">
@@ -125,21 +123,17 @@ export default function Home() {
             </div>
 
             {/* Service 2: Hafif Çelik */}
-            <div className="flex flex-col lg:flex-row-reverse gap-16 items-center">
-              <div className="flex-1 space-y-8 text-left">
+            <div className="flex flex-col lg:flex-row-reverse gap-16 items-center text-left">
+              <div className="flex-1 space-y-8">
                 <div className="inline-block px-4 py-1.5 bg-oba-orange/10 text-oba-orange rounded-full text-[10px] font-black uppercase tracking-[0.2em]">
                   Yeni Nesil Yapı Standartları
                 </div>
-                <h2 className="text-4xl md:text-5xl font-black text-oba-dark tracking-tighter uppercase italic text-left">Hafif Çelik Teknolojisi</h2>
-                <p className="text-gray-500 text-lg leading-relaxed font-medium text-left">Geleceğin yapı teknolojisi olan hafif çelik sistemler ile hem çevre dostu hem de son derece dayanıklı binalar inşa ediyoruz. Galvanizli çelik profiller kullanılarak üretilen bu yapılar, korozyona karşı dirençli ve uzun ömürlüdür.</p>
+                <h2 className="text-4xl md:text-5xl font-black text-oba-dark tracking-tighter uppercase italic">Hafif Çelik Teknolojisi</h2>
+                <p className="text-gray-500 text-lg leading-relaxed font-medium">Geleceğin yapı teknolojisi olan hafif çelik sistemler ile hem çevre dostu hem de son derece dayanıklı binalar inşa ediyoruz.</p>
                 <ul className="space-y-4">
                   <li className="flex items-center gap-4 text-oba-dark font-bold text-sm uppercase italic">
                     <div className="w-6 h-6 rounded-full bg-oba-orange text-white flex items-center justify-center flex-shrink-0"><ShieldCheck size={14} /></div>
                     Korozyona Karşı Direnç
-                  </li>
-                  <li className="flex items-center gap-4 text-oba-dark font-bold text-sm uppercase italic">
-                    <div className="w-6 h-6 rounded-full bg-oba-orange text-white flex items-center justify-center flex-shrink-0"><ShieldCheck size={14} /></div>
-                    %100 Geri Dönüştürülebilir
                   </li>
                   <li className="flex items-center gap-4 text-oba-dark font-bold text-sm uppercase italic">
                     <div className="w-6 h-6 rounded-full bg-oba-orange text-white flex items-center justify-center flex-shrink-0"><ShieldCheck size={14} /></div>
@@ -158,21 +152,17 @@ export default function Home() {
             </div>
 
             {/* Service 3: Endüstriyel */}
-            <div className="flex flex-col lg:flex-row gap-16 items-center">
-              <div className="flex-1 space-y-8 text-left">
+            <div className="flex flex-col lg:flex-row gap-16 items-center text-left">
+              <div className="flex-1 space-y-8">
                 <div className="inline-block px-4 py-1.5 bg-oba-orange/10 text-oba-orange rounded-full text-[10px] font-black uppercase tracking-[0.2em]">
                   Geniş Açıklıklı Ticari Çözümler
                 </div>
-                <h2 className="text-4xl md:text-5xl font-black text-oba-dark tracking-tighter uppercase italic text-left">Endüstriyel Yapılar</h2>
-                <p className="text-gray-500 text-lg leading-relaxed font-medium text-left">Fabrika binaları, depolar, hangarlar ve spor tesisleri için geniş açıklıklı ağır çelik konstrüksiyon sistemler üretiyoruz. İşletmenizin ihtiyaçlarına göre optimize edilmiş statik hesaplamalarla, en ağır yükleri taşıyabilen işlevsel ve dayanıklı alanlar yaratıyoruz.</p>
+                <h2 className="text-4xl md:text-5xl font-black text-oba-dark tracking-tighter uppercase italic">Endüstriyel Yapılar</h2>
+                <p className="text-gray-500 text-lg leading-relaxed font-medium">Fabrika binaları, depolar ve hangarlar için geniş açıklıklı ağır çelik konstrüksiyon sistemler üretiyoruz.</p>
                 <ul className="space-y-4">
                   <li className="flex items-center gap-4 text-oba-dark font-bold text-sm uppercase italic">
                     <div className="w-6 h-6 rounded-full bg-oba-orange text-white flex items-center justify-center flex-shrink-0"><ShieldCheck size={14} /></div>
                     Geniş Açıklıklı Sistemler
-                  </li>
-                  <li className="flex items-center gap-4 text-oba-dark font-bold text-sm uppercase italic">
-                    <div className="w-6 h-6 rounded-full bg-oba-orange text-white flex items-center justify-center flex-shrink-0"><ShieldCheck size={14} /></div>
-                    Ağır Yük Taşıma Kapasitesi
                   </li>
                   <li className="flex items-center gap-4 text-oba-dark font-bold text-sm uppercase italic">
                     <div className="w-6 h-6 rounded-full bg-oba-orange text-white flex items-center justify-center flex-shrink-0"><ShieldCheck size={14} /></div>
@@ -193,7 +183,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Gallery Section - 2 columns mobile, 4 columns PC */}
+      {/* Gallery Section */}
       <section className="py-20 md:py-32 bg-oba-dark overflow-hidden">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center mb-12 gap-4">
@@ -224,13 +214,13 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Dynamic Blog Section - 2 columns mobile, 3 columns PC */}
-      <section className="py-20 md:py-32 bg-white text-left">
+      {/* Blog Section */}
+      <section className="py-20 md:py-32 bg-white">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-end mb-16">
             <div className="text-left">
               <h2 className="text-oba-orange font-bold tracking-[0.2em] uppercase mb-4 text-[10px] md:text-xs">Blog & Haberler</h2>
-              <h3 className="text-3xl md:text-5xl font-black text-oba-dark tracking-tighter uppercase italic text-left">Güncel Gelişmeler</h3>
+              <h3 className="text-3xl md:text-5xl font-black text-oba-dark tracking-tighter uppercase italic">Güncel Gelişmeler</h3>
             </div>
             <Link href="/blog" className="hidden sm:flex text-gray-400 font-bold hover:text-oba-orange transition-colors items-center gap-2 text-sm">Tüm Yazılar <ArrowRight size={18} /></Link>
           </div>
@@ -241,9 +231,8 @@ export default function Home() {
                   <Image src={post.imageUrl || "/assets/images/oba-celik-yapi-galeri.png"} alt={post.title} fill className="object-cover group-hover:scale-110 transition duration-700" />
                   <div className="absolute top-2 left-2 md:top-4 md:left-4 bg-white/95 px-2 md:px-3 py-0.5 md:py-1 rounded-lg text-[7px] md:text-[10px] font-black uppercase tracking-wider text-oba-orange">{post.category}</div>
                 </div>
-                <h4 className="text-xs md:text-xl font-bold text-oba-dark mb-2 leading-snug group-hover:text-oba-orange transition-colors line-clamp-2 uppercase italic text-left">{post.title}</h4>
-                <p className="hidden md:block text-gray-500 text-sm leading-relaxed line-clamp-2 mb-4 font-medium">{post.excerpt}</p>
-                <div className="inline-flex items-center gap-2 text-[10px] md:text-sm font-black text-oba-dark uppercase tracking-wide group-hover:gap-4 transition-all text-left">Oku <ArrowRight size={16} className="text-oba-orange" /></div>
+                <h4 className="text-xs md:text-xl font-bold text-oba-dark mb-2 leading-snug group-hover:text-oba-orange transition-colors line-clamp-2 uppercase italic">{post.title}</h4>
+                <div className="inline-flex items-center gap-2 text-[10px] md:text-sm font-black text-oba-dark uppercase tracking-wide group-hover:gap-4 transition-all">Oku <ArrowRight size={16} className="text-oba-orange" /></div>
               </Link>
             ))}
           </div>
@@ -265,31 +254,13 @@ export default function Home() {
   );
 }
 
-function ServiceCard({ title, description, image, number }: any) {
-  return (
-    <div className="group bg-[#F8F9FC] rounded-2xl p-2 hover:bg-white hover:shadow-2xl transition-all duration-500 border border-transparent hover:border-gray-100 text-left">
-      <div className="relative h-48 md:h-64 rounded-xl md:rounded-[2rem] overflow-hidden mb-4 md:mb-8 text-left text-left">
-        <Image src={image} alt={title} fill className="object-cover group-hover:scale-105 transition duration-700" />
-        <div className="absolute top-3 right-3 w-8 h-8 md:w-12 md:h-12 bg-white rounded-full flex items-center justify-center font-black text-oba-dark text-sm md:text-lg shadow-lg">{number}</div>
-      </div>
-      <div className="px-3 md:px-6 pb-4 md:pb-8 text-left text-left">
-        <h4 className="text-base md:text-2xl font-black mb-2 md:mb-4 text-oba-dark tracking-tight group-hover:text-oba-orange transition-colors uppercase italic text-left">{title}</h4>
-        <p className="text-gray-500 font-medium leading-relaxed mb-4 text-[11px] md:text-sm text-left line-clamp-2 md:line-clamp-none">{description}</p>
-        <Link href="/hizmetler" className="inline-flex items-center gap-3 text-oba-dark font-bold text-[9px] md:text-xs uppercase tracking-widest group-hover:gap-5 transition-all text-left">
-          İncele <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-oba-orange text-white flex items-center justify-center"><ArrowRight size={12} /></div>
-        </Link>
-      </div>
-    </div>
-  );
-}
-
 function StatItem({ icon, value, label }: any) {
    return (
-      <div className="flex items-center gap-3 text-white text-left">
-         <div className="w-8 h-8 md:w-12 md:h-12 rounded-lg bg-white/10 flex items-center justify-center text-oba-orange flex-shrink-0 text-left">{icon}</div>
-         <div className="text-left text-left">
-            <div className="text-sm md:text-2xl font-black tracking-tighter italic text-left">{value}</div>
-            <div className="text-[7px] md:text-[10px] text-gray-400 font-bold uppercase tracking-widest text-left">{label}</div>
+      <div className="flex items-center gap-3 text-white">
+         <div className="w-8 h-8 md:w-12 md:h-12 rounded-lg bg-white/10 flex items-center justify-center text-oba-orange flex-shrink-0">{icon}</div>
+         <div className="text-left">
+            <div className="text-sm md:text-2xl font-black tracking-tighter italic">{value}</div>
+            <div className="text-[7px] md:text-[10px] text-gray-400 font-bold uppercase tracking-widest">{label}</div>
          </div>
       </div>
    )
