@@ -3,6 +3,10 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   output: "export",
+  // GitHub Pages özel domain (obacelikyapi.com) için assetPrefix boş kalmalı veya / olmalı
+  assetPrefix: "",
+  // GitHub Pages için klasör yapısı (folder structure) çok daha güvenlidir
+  trailingSlash: true,
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -12,8 +16,6 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-  // GitHub Pages için trailingSlash bazen CSS yollarını bozabilir, kapatıp deneyelim
-  trailingSlash: false,
 };
 
 export default nextConfig;
