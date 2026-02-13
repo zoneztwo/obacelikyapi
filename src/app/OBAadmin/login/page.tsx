@@ -61,7 +61,7 @@ export default function AdminLogin() {
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   className="w-full pl-14 pr-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl font-bold focus:ring-2 focus:ring-oba-orange outline-none transition-all"
-                  placeholder="oba_admin"
+                  placeholder="Kullanıcı Adı"
                 />
               </div>
             </div>

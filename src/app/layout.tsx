@@ -6,18 +6,25 @@ import LayoutWrapper from "@/components/LayoutWrapper";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Oba Çelik Yapı | Çelik Yapı ve Prefabrik Çözümleri",
-  description: "Türkiye genelinde en üst segment çelik yapı, prefabrik ev ve endüstriyel çözümler sunan Oba Çelik Yapı kurumsal web sitesi.",
+  title: "Oba Çelik Yapı | Premium Çelik Ev ve Yapı Sistemleri",
+  description: "Türkiye genelinde en üst segment çelik ev, hafif çelik ve endüstriyel yapı çözümleri sunan Oba Çelik Yapı kurumsal web sitesi.",
   icons: {
-    icon: "/assets/logos/favicon.webp",
+    icon: [
+      { url: "/assets/logos/favicon.webp", type: "image/webp" },
+    ],
+    apple: [
+      { url: "/assets/logos/favicon.webp", type: "image/webp" },
+    ],
   },
 };
 
