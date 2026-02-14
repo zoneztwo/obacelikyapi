@@ -27,7 +27,7 @@ export default function AdminDashboard() {
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const [authenticated, setAuthenticated] = useState(false);
-  const [newPost, setNewPost] = useState({ title: "", category: "Rehber", excerpt: "", imageUrl: "", images: [] as string[] });
+  const [newPost, setNewPost] = useState({ title: "", category: "Rehber", excerpt: "", content: "", imageUrl: "", images: [] as string[] });
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState("");
   
@@ -155,7 +155,7 @@ export default function AdminDashboard() {
       if (!res.ok) throw new Error('Yazı eklenemedi');
       
       setShowModal(false);
-      setNewPost({ title: "", category: "Rehber", excerpt: "", imageUrl: "", images: [] });
+      setNewPost({ title: "", category: "Rehber", excerpt: "", content: "", imageUrl: "", images: [] });
       fetchPosts();
       alert("Yazı başarıyla yayınlandı!");
     } catch (err) {
@@ -340,7 +340,8 @@ export default function AdminDashboard() {
                 <select className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl font-bold focus:ring-2 focus:ring-oba-orange outline-none transition-all appearance-none" value={newPost.category} onChange={(e) => setNewPost({...newPost, category: e.target.value})}>
                     <option>Rehber</option><option>Haberler</option><option>Tamamlanan Projeler</option>
                 </select>
-                <textarea rows={3} placeholder="İçerik özeti..." className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl font-bold resize-none focus:ring-2 focus:ring-oba-orange outline-none transition-all" value={newPost.excerpt} onChange={(e) => setNewPost({...newPost, excerpt: e.target.value})}></textarea>
+                <textarea rows={2} placeholder="Kısa Özet (Listeleme sayfasında görünür)" className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl font-bold resize-none focus:ring-2 focus:ring-oba-orange outline-none transition-all" value={newPost.excerpt} onChange={(e) => setNewPost({...newPost, excerpt: e.target.value})}></textarea>
+                <textarea rows={6} placeholder="Blog İçeriği (Detay sayfasında görünür)" className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl font-bold resize-none focus:ring-2 focus:ring-oba-orange outline-none transition-all" value={newPost.content} onChange={(e) => setNewPost({...newPost, content: e.target.value})}></textarea>
                 
                 {/* Image Gallery in Modal */}
                 {newPost.images.length > 0 && (

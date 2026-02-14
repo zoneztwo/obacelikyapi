@@ -56,12 +56,19 @@ export default function BlogPostClient({ id }: { id: string }) {
             <h1 className="text-4xl md:text-6xl font-black text-oba-dark tracking-tighter mb-10 leading-tight uppercase italic">{post.title}</h1>
             
             <div className="prose prose-xl max-w-none text-gray-500 font-medium leading-relaxed space-y-6">
-              <p className="text-2xl text-oba-dark font-bold italic border-l-4 border-oba-orange pl-8 mb-10">
-                {post.excerpt}
-              </p>
-              <p>
-                Oba Çelik Yapı kalitesiyle inşa edilen tüm yapılarımızda olduğu gibi, bu içeriğimizde de modern çelik yapı sistemlerinin hayatımıza kattığı değeri ve mühendislik vizyonumuzu sizlerle paylaşıyoruz. 
-              </p>
+              {post.excerpt && (
+                <p className="text-2xl text-oba-dark font-bold italic border-l-4 border-oba-orange pl-8 mb-10">
+                  {post.excerpt}
+                </p>
+              )}
+              
+              <div className="whitespace-pre-wrap text-lg">
+                {post.content || (
+                  <p>
+                    Oba Çelik Yapı kalitesiyle inşa edilen tüm yapılarımızda olduğu gibi, bu içeriğimizde de modern çelik yapı sistemlerinin hayatımıza kattığı değeri ve mühendislik vizyonumuzu sizlerle paylaşıyoruz. 
+                  </p>
+                )}
+              </div>
               
               {/* Image Gallery */}
               {post.images && post.images.length > 0 && (

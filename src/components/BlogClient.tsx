@@ -70,7 +70,7 @@ export default function BlogClient() {
                         {post.title}
                       </h3>
                       
-                      <p className="hidden md:block text-gray-500 leading-relaxed mb-8 line-clamp-3 font-medium text-sm text-left">
+                      <p className="text-gray-500 leading-relaxed mb-4 md:mb-8 line-clamp-2 md:line-clamp-3 font-medium text-[10px] md:text-sm text-left">
                         {post.excerpt}
                       </p>
                       
